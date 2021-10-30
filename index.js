@@ -34,7 +34,6 @@ async function run() {
         app.get('/orders', async (req, res) => {
             const cursor = ordersCollection.find({});
             const orders = await cursor.toArray();
-            console.log(orders);
             res.send(orders)
         })
 
@@ -59,6 +58,29 @@ async function run() {
             const newOrders = req.body;
             const result = await ordersCollection.insertOne(newOrders)
             res.json(result);
+        })
+
+        // update user orders api 
+        app.put('/orders/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const options = { upsert: true };
+            const updateDoc = {
+                $set: {
+                    status: true,
+                },
+            };
+            const result = await ordersCollection.updateOne(query, updateDoc, options);
+            res.json(result)
+        })
+
+        // orders delete 
+        app.delete('/orders/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await ordersCollection.deleteOne(query);
+            console.log(result);
+            res.json(result)
         })
 
 
