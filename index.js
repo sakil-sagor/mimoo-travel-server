@@ -72,7 +72,7 @@ run().catch(console.dir);
 
 
 app.get('/', (req, res) => {
-    res.send('Running Node Server for aim-as')
+    res.send('Running Node Server for mimoo-travel')
 })
 
 app.listen(port, () => {
